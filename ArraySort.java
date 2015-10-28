@@ -4,6 +4,8 @@ public abstract class ArraySort<T> {
    public long iSortTimed(T[] inArray) {
       // TO DO
 
+      return 0; //Placeholder
+
    }
    public void setComparator(Comparator<T> comparator) {
       // TO DO
