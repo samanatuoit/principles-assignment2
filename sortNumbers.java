@@ -1,7 +1,7 @@
 class BubbleSort<T> extends ArraySort<T> {
 
    public void iSort(T[] inArray) {
-      IntegerComparator<Integer> myComp = new IntegerComparator<Integer>(true);
+      IntegerComparator myComp = new IntegerComparator(true);
       System.out.println(myComp.compare(1,1));
 
    }
@@ -25,18 +25,18 @@ public class sortNumbers {
 
 }
 
-class IntegerComparator<T> implements Comparator<T> {
+class IntegerComparator implements Comparator<Integer> {
 
-   public int compare(T a, T b) {
+   public int compare(Integer a, Integer b) {
 
-      //if (a < b) return -1;
-      if (a == b) {
-         return 0;
+      if (a < b) {
+         return -1;
       }
-      else {
+      
+      if (a > b) {
          return 1;
       }
-      //if (a > b) return 1;
+      else return 0;
 
    }
 
