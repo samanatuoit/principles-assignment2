@@ -56,6 +56,7 @@ class IntegerComparator implements Comparator<Integer> {
 
    public int compare(Integer a, Integer b) {
       if (ascend == true) {
+         System.out.println("Ascend is true");
          if (a < b) {
             return -1;
          }
@@ -67,12 +68,13 @@ class IntegerComparator implements Comparator<Integer> {
 
       }
       else {
+         System.out.println("Ascend is false");
          if (a < b) {
-            return -1;
+            return 1;
          }
 
          if (a > b) {
-            return 1;
+            return -1;
          }
          else return 0;
       }
@@ -81,7 +83,7 @@ class IntegerComparator implements Comparator<Integer> {
 
    public IntegerComparator(boolean ascend) {
       this.ascend = ascend;
-      
+
 
    }
 
