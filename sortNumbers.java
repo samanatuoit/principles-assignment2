@@ -1,4 +1,5 @@
 class BubbleSort<T> extends ArraySort<T> {
+   boolean ascend;
 
    public void iSort(Integer[] inArray) {
       IntegerComparator myComp = new IntegerComparator(true);
@@ -19,9 +20,9 @@ class BubbleSort<T> extends ArraySort<T> {
       for (int p=0;p<inArray.length;p++) {
          System.out.print(inArray[p]);
       }
-      
-
-
+   }
+   public BubbleSort(boolean ascend) {
+      this.ascend = ascend;
    }
    public T[] oSort(T[] inArray) {
 
@@ -33,11 +34,12 @@ class BubbleSort<T> extends ArraySort<T> {
 
 public class sortNumbers {
    public static void main(String[] args) {
+      boolean ascend = true;
       System.out.println("Hello");
-      BubbleSort<Integer> myBub = new BubbleSort<Integer>();
-      Integer[] myarray = new Integer[2];
-      myarray[0] = 1;
-      myarray[1] = 2;
+      BubbleSort<Integer> myBub = new BubbleSort<Integer>(ascend);
+      //Integer[] myarray = new Integer[2];
+      //myarray[0] = 1;
+      //myarray[1] = 2;
       Integer[] myList = {5,3,2,4,1};
       //myBub.iSort(myarray);
 
