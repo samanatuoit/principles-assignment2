@@ -1,8 +1,26 @@
 class BubbleSort<T> extends ArraySort<T> {
 
-   public void iSort(T[] inArray) {
+   public void iSort(Integer[] inArray) {
       IntegerComparator myComp = new IntegerComparator(true);
-      System.out.println(myComp.compare(1,1));
+      //System.out.println(myComp.compare(1,1));
+
+      // Bubblesort algo
+      Integer temp;
+      for (int i=0;i<inArray.length;i++) {
+         for (int j=0;j<inArray.length;j++) {
+            if (myComp.compare(inArray[i],inArray[j]) == -1) {
+               //System.out.println("Hi");
+               temp = inArray[j];
+               inArray[j] = inArray[i];
+               inArray[i] = temp;
+            }
+         }
+      }
+      for (int p=0;p<inArray.length;p++) {
+         System.out.print(inArray[p]);
+      }
+      
+
 
    }
    public T[] oSort(T[] inArray) {
@@ -20,7 +38,13 @@ public class sortNumbers {
       Integer[] myarray = new Integer[2];
       myarray[0] = 1;
       myarray[1] = 2;
-      myBub.iSort(myarray);
+      Integer[] myList = {5,3,2,4,1};
+      //myBub.iSort(myarray);
+
+      myBub.iSort(myList);
+
+
+      // use a for loop for args
    }
 
 }
@@ -32,7 +56,7 @@ class IntegerComparator implements Comparator<Integer> {
       if (a < b) {
          return -1;
       }
-      
+
       if (a > b) {
          return 1;
       }
@@ -41,6 +65,7 @@ class IntegerComparator implements Comparator<Integer> {
    }
 
    public IntegerComparator(boolean ascend) {
+      boolean myvalue = ascend;
       if (ascend == true) {
 
       }
