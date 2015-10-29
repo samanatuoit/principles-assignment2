@@ -52,25 +52,36 @@ public class sortNumbers {
 }
 
 class IntegerComparator implements Comparator<Integer> {
+   boolean ascend;
 
    public int compare(Integer a, Integer b) {
+      if (ascend == true) {
+         if (a < b) {
+            return -1;
+         }
 
-      if (a < b) {
-         return -1;
-      }
+         if (a > b) {
+            return 1;
+         }
+         else return 0;
 
-      if (a > b) {
-         return 1;
       }
-      else return 0;
+      else {
+         if (a < b) {
+            return -1;
+         }
+
+         if (a > b) {
+            return 1;
+         }
+         else return 0;
+      }
 
    }
 
    public IntegerComparator(boolean ascend) {
-      boolean myvalue = ascend;
-      if (ascend == true) {
-
-      }
+      this.ascend = ascend;
+      
 
    }
 
