@@ -12,6 +12,15 @@ class BubbleSort<T> extends ArraySort<T> {
       //setComparator(myComp);
       //System.out.println(myComp.compare(1,2));
 
+      // if array length < 10, print unsorted array
+      if (inArray.length < 10) {
+         for (int p=0;p<inArray.length;p++) {
+            System.out.print(inArray[p] + " ");
+         }
+
+      }
+      System.out.println(); // newline
+
 
       // Bubblesort algo
       T temp;
@@ -25,10 +34,17 @@ class BubbleSort<T> extends ArraySort<T> {
             }
          }
       }
-      System.out.println("Sort complete. Printing :");
-      for (int p=0;p<inArray.length;p++) {
-         System.out.print(inArray[p] + " ");
+      //System.out.println("Sort complete. Printing :");
+
+      // if array length < 10, print sorted array
+      if (inArray.length < 10) {
+         for (int p=0;p<inArray.length;p++) {
+            System.out.print(inArray[p] + " ");
+         }
+
       }
+
+
    }
    /*public BubbleSort(boolean ascend) {
       this.ascend = ascend;
@@ -52,11 +68,31 @@ class BubbleSort<T> extends ArraySort<T> {
 
    }
    public void setComparator(Comparator<T> comparator) {
-      System.out.println("Calling setComparator ");
+      //System.out.println("Calling setComparator ");
 
       //myComp = new IntegerComparator(ascend);
       myComp = comparator;
 
+   }
+   public long iSortTimed(T[] inArray) {
+      long startTime = System.nanoTime();
+
+      T temp;
+      for (int i=0;i<inArray.length;i++) {
+         for (int j=0;j<inArray.length;j++) {
+            if (myComp.compare(inArray[i],inArray[j]) == -1) {
+               //System.out.println("Hi");
+               temp = inArray[j];
+               inArray[j] = inArray[i];
+               inArray[i] = temp;
+            }
+         }
+      }
+
+
+      long elapsedTime = System.nanoTime() - startTime;
+      //elapsedTime = elapsedTime / 1000000000;
+      return elapsedTime;
    }
 
 }
@@ -65,6 +101,7 @@ public class sortNumbers {
    public static void main(String[] args) {
       boolean ascend = true;
       Random rand = new Random();
+      long elapsedTime;
       int myArrLength = Integer.parseInt(args[0]);
       String mySortMethod = args[1];
 
@@ -81,6 +118,8 @@ public class sortNumbers {
 
          myBub.iSort(myArray);
          Integer[] mySortedArray = myBub.oSort(myArray);
+         elapsedTime = myBub.iSortTimed(myArray);
+         System.out.println("\n" + elapsedTime);
          break;
       }
 
