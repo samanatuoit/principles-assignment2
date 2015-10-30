@@ -35,7 +35,20 @@ class BubbleSort<T> extends ArraySort<T> {
    }*/
    public T[] oSort(T[] inArray) {
 
-      return null; // Placeholder
+      T temp;
+      T[] newArray = inArray;
+      for (int i=0;i<newArray.length;i++) {
+         for (int j=0;j<newArray.length;j++) {
+            if (myComp.compare(newArray[i],newArray[j]) == -1) {
+               //System.out.println("Hi");
+               temp = newArray[j];
+               newArray[j] = newArray[i];
+               newArray[i] = temp;
+            }
+         }
+      }
+
+      return newArray; // Placeholder
 
    }
    public void setComparator(Comparator<T> comparator) {
@@ -65,8 +78,9 @@ public class sortNumbers {
             myArray[i] = rand.nextInt(101);
 
          }
-         
+
          myBub.iSort(myArray);
+         Integer[] mySortedArray = myBub.oSort(myArray);
          break;
       }
 
