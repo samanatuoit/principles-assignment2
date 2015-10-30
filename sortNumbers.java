@@ -1,12 +1,18 @@
 class BubbleSort<T> extends ArraySort<T> {
    boolean ascend;
+   Comparator<T> myComp;
+   //IntegerComparator myComp = new IntegerComparator(ascend);
+   //Comparator<Integer> myComp = new IntegerComparator(ascend);
+   public void iSort(T[] inArray) {
+      //Comparator<T> myComp = new IntegerComparator(ascend);
 
-   public void iSort(Integer[] inArray) {
-      IntegerComparator myComp = new IntegerComparator(true);
-      //System.out.println(myComp.compare(1,1));
+      //IntegerComparator myComp = new IntegerComparator(ascend);
+      //setComparator(myComp);
+      //System.out.println(myComp.compare(1,2));
+
 
       // Bubblesort algo
-      Integer temp;
+      T temp;
       for (int i=0;i<inArray.length;i++) {
          for (int j=0;j<inArray.length;j++) {
             if (myComp.compare(inArray[i],inArray[j]) == -1) {
@@ -29,6 +35,12 @@ class BubbleSort<T> extends ArraySort<T> {
       return null; // Placeholder
 
    }
+   public void setComparator(Comparator<T> comparator) {
+      System.out.println("Calling setComparator ");
+
+      //myComp = new IntegerComparator(ascend);
+
+   }
 
 }
 
@@ -37,6 +49,7 @@ public class sortNumbers {
       boolean ascend = true;
       System.out.println("Hello");
       BubbleSort<Integer> myBub = new BubbleSort<Integer>(ascend);
+      myBub.myComp = new IntegerComparator(ascend); // This works
       //Integer[] myarray = new Integer[2];
       //myarray[0] = 1;
       //myarray[1] = 2;
@@ -56,7 +69,7 @@ class IntegerComparator implements Comparator<Integer> {
 
    public int compare(Integer a, Integer b) {
       if (ascend == true) {
-         System.out.println("Ascend is true");
+         //System.out.println("Ascend is true");
          if (a < b) {
             return -1;
          }
@@ -68,7 +81,7 @@ class IntegerComparator implements Comparator<Integer> {
 
       }
       else {
-         System.out.println("Ascend is false");
+         //System.out.println("Ascend is false");
          if (a < b) {
             return 1;
          }
