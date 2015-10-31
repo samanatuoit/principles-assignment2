@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 
 class BubbleSort<T> extends ArraySort<T> {
    //boolean ascend;
@@ -91,10 +91,95 @@ class BubbleSort<T> extends ArraySort<T> {
 
 
       long elapsedTime = System.nanoTime() - startTime;
-      //elapsedTime = elapsedTime / 1000000000;
+      //elapsedTime = (double)elapsedTime / 1000000000.0;
       return elapsedTime;
    }
 
+}
+
+class MergeSort<T> extends ArraySort<T> {
+   Comparator<T> myComp;
+
+   private void mergeSort(T[] inArray, int p, int r) {
+      if (p < r) {
+         //System.out.println("p < r ");
+         int q = (p+r)/2;
+         mergeSort(inArray, p, q);
+         mergeSort(inArray, q+1, r);
+         //System.out.println("Doing merge: ");
+         merge(inArray, p, q, r);
+      }
+   }
+   private void merge(T[] inArray, int p, int q, int r) {
+      T[] lowHalf = Arrays.copyOfRange(inArray, p, q+1);
+      T[] highHalf = Arrays.copyOfRange(inArray, q+1, r+1);
+      //System.out.println("inArray.length  = " + inArray.length);
+      // Test block
+      //for (int b = 0; b < lowHalf.length; b++) System.out.println("lowHalf: " + lowHalf[b]);
+      //for (int z = 0; z < highHalf.length; z++) System.out.println("highHalf: " + highHalf[z]);
+
+      int k = p;
+      int i = 0;
+      int j = 0;
+      while (i < lowHalf.length && j < highHalf.length) {
+         if (myComp.compare(lowHalf[i], highHalf[j]) == -1) {
+            inArray[k] = lowHalf[i];
+            i++;
+            k++;
+         }
+         else {
+            inArray[k] = highHalf[j];
+            j++;
+            k++;
+         }
+      }
+
+      while (i < lowHalf.length) {
+         inArray[k] = lowHalf[i];
+         i++;
+         k++;
+      }
+      while (j < highHalf.length) {
+         inArray[k] = highHalf[j];
+         j++;
+         k++;
+      }
+
+
+
+   }
+
+   public void setComparator(Comparator<T> comparator) {
+      myComp = comparator;
+   }
+
+
+
+
+
+   public void iSort(T[] inArray) {
+      // if array length < 10, print unsorted array
+      //T[] mergedArray;
+      if (inArray.length < 10) {
+         for (int p=0;p<inArray.length;p++) {
+            System.out.print(inArray[p] + " ");
+         }
+
+      }
+      System.out.println(); // newline
+      mergeSort(inArray, 0, inArray.length-1);
+      // Print the sorted array
+      //System.out.println("Sorted array: ");
+      for (int y=0;y<inArray.length;y++) {
+         System.out.print(inArray[y] + " ");
+      }
+
+
+
+   }
+   public T[] oSort(T[] inArray) {
+      return null; // placeholder
+   }
 }
 
 public class sortNumbers {
@@ -104,26 +189,41 @@ public class sortNumbers {
       long elapsedTime;
       int myArrLength = Integer.parseInt(args[0]);
       String mySortMethod = args[1];
+      String sortDirection;
+      if (args.length == 3) {
+         //System.out.println("args.length of 3 detected ");
+         sortDirection = args[2];
+         if (sortDirection.equals("descend")) {
+            ascend = false;
+            //System.out.println("Ascend is now false");
+         }
+      }
 
       Integer[] myArray = new Integer[myArrLength];
+      for (int i=0;i<myArrLength;i++) {
+         myArray[i] = rand.nextInt(101);
+
+      }
       switch(mySortMethod) {
          case "bubble":
          BubbleSort<Integer> myBub = new BubbleSort<Integer>();
          Comparator<Integer> myNewComp = new IntegerComparator(ascend);
          myBub.setComparator(myNewComp);
-         for (int i=0;i<myArrLength;i++) {
-            myArray[i] = rand.nextInt(101);
 
-         }
 
          myBub.iSort(myArray);
          Integer[] mySortedArray = myBub.oSort(myArray);
          elapsedTime = myBub.iSortTimed(myArray);
          System.out.println("\n" + elapsedTime);
          break;
+         case "merge":
+         MergeSort<Integer> myMg = new MergeSort<Integer>();
+         Comparator<Integer> myMgComp = new IntegerComparator(ascend);
+         myMg.setComparator(myMgComp);
+         myMg.iSort(myArray);
       }
 
-      String sortDirection;/*
+      /*
 
       if (args.length <= 2) {
          int myArrLength = Integer.parseInt(args[0]);
