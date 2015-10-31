@@ -180,6 +180,13 @@ class MergeSort<T> extends ArraySort<T> {
    public T[] oSort(T[] inArray) {
       return null; // placeholder
    }
+   public long iSortTimed(T[] inArray) {
+      long startTime = System.nanoTime();
+      mergeSort(inArray, 0, inArray.length-1);
+      long elapsedTime = System.nanoTime() - startTime;
+      return elapsedTime;
+
+   }
 }
 
 public class sortNumbers {
@@ -209,8 +216,6 @@ public class sortNumbers {
          BubbleSort<Integer> myBub = new BubbleSort<Integer>();
          Comparator<Integer> myNewComp = new IntegerComparator(ascend);
          myBub.setComparator(myNewComp);
-
-
          myBub.iSort(myArray);
          Integer[] mySortedArray = myBub.oSort(myArray);
          elapsedTime = myBub.iSortTimed(myArray);
@@ -221,6 +226,9 @@ public class sortNumbers {
          Comparator<Integer> myMgComp = new IntegerComparator(ascend);
          myMg.setComparator(myMgComp);
          myMg.iSort(myArray);
+         // Integer[] mySortedArray = myMg.oSort(myArray);
+         elapsedTime = myMg.iSortTimed(myArray);
+         System.out.println("\n" + elapsedTime);
       }
 
       /*
