@@ -37,12 +37,12 @@ class BubbleSort<T> extends ArraySort<T> {
       //System.out.println("Sort complete. Printing :");
 
       // if array length < 10, print sorted array
-      if (inArray.length < 10) {
+      /*if (inArray.length < 10) {
          for (int p=0;p<inArray.length;p++) {
             System.out.print(inArray[p] + " ");
          }
 
-      }
+      }*/
 
 
    }
@@ -170,15 +170,17 @@ class MergeSort<T> extends ArraySort<T> {
       mergeSort(inArray, 0, inArray.length-1);
       // Print the sorted array
       //System.out.println("Sorted array: ");
-      for (int y=0;y<inArray.length;y++) {
+      /*for (int y=0;y<inArray.length;y++) {
          System.out.print(inArray[y] + " ");
-      }
+      }*/
 
 
 
    }
    public T[] oSort(T[] inArray) {
-      return null; // placeholder
+      T[] arrayCopy = inArray;
+      mergeSort(arrayCopy, 0, inArray.length-1);
+      return arrayCopy;
    }
    public long iSortTimed(T[] inArray) {
       long startTime = System.nanoTime();
@@ -186,6 +188,72 @@ class MergeSort<T> extends ArraySort<T> {
       long elapsedTime = System.nanoTime() - startTime;
       return elapsedTime;
 
+   }
+}
+
+class QuickSort<T> extends ArraySort<T> {
+   Comparator<T> myComp;
+
+   private void qsort(T[] inArray, int p, int r) {
+
+      if (p < r) {
+         int pivot = partition(inArray, p, r);
+         //System.out.println("Pivot = " + pivot);
+         qsort(inArray, p, pivot-1);
+         qsort(inArray, pivot+1, r);
+      }
+   }
+   private int partition(T[] inArray, int p, int r) {
+
+      int q = p;
+      T temp;
+
+
+      for (int j=p;j < r;j++) {
+         //System.out.println("j: inArray[" + j + "] = " + inArray[j]);
+         //System.out.println("q: inArray[" + q + "] = " + inArray[q]);
+         //System.out.println("Pivot: inArray[" + r + "] = " + inArray[r]);
+         if (myComp.compare(inArray[j],inArray[r]) == -1) {
+            //System.out.println("Hello there!");
+            temp = inArray[q];
+            inArray[q] = inArray[j];
+            inArray[j] = temp;
+            q++;
+            //System.out.println("In for loop: q is now " + q);
+         }
+      }
+      //System.out.println("Doing final pivot swap. ");
+      //System.out.println("Outside for loop: q is " + q);
+      temp = inArray[r];
+      inArray[r] = inArray[q];
+      inArray[q] = temp;
+      //System.out.println("q being returned = " + q);
+
+      //System.out.println("Pivot = " + inArray[q]);
+
+      return q;
+
+   }
+
+   public void iSort(T[] inArray) {
+      qsort(inArray, 0, inArray.length-1);
+      //System.out.println("Sorted array: ");
+      /*for (int i=0;i<inArray.length;i++) {
+
+         System.out.print(inArray[i] + " ");
+      }*/
+
+   }
+   public T[] oSort(T[] inArray) {
+      T[] arrayCopy = inArray;
+      qsort(arrayCopy, 0, arrayCopy.length-1);
+      return arrayCopy;
+   }
+   public long iSortTimed(T[] inArray) {
+      return 0; // Placeholder
+   }
+   public void setComparator(Comparator<T> comparator) {
+      myComp = comparator;
    }
 }
 
@@ -197,6 +265,7 @@ public class sortNumbers {
       int myArrLength = Integer.parseInt(args[0]);
       String mySortMethod = args[1];
       String sortDirection;
+      Integer[] mySortedArray;
       if (args.length == 3) {
          //System.out.println("args.length of 3 detected ");
          sortDirection = args[2];
@@ -217,7 +286,9 @@ public class sortNumbers {
          Comparator<Integer> myNewComp = new IntegerComparator(ascend);
          myBub.setComparator(myNewComp);
          myBub.iSort(myArray);
-         Integer[] mySortedArray = myBub.oSort(myArray);
+         mySortedArray = myBub.oSort(myArray);
+         //System.out.println("Printing oSort array: ");
+         if (myArray.length < 10) for (int i = 0; i<mySortedArray.length;i++) System.out.print(mySortedArray[i] + " ");
          elapsedTime = myBub.iSortTimed(myArray);
          System.out.println("\n" + elapsedTime);
          break;
@@ -226,9 +297,23 @@ public class sortNumbers {
          Comparator<Integer> myMgComp = new IntegerComparator(ascend);
          myMg.setComparator(myMgComp);
          myMg.iSort(myArray);
-         // Integer[] mySortedArray = myMg.oSort(myArray);
+         mySortedArray = myMg.oSort(myArray);
+         //System.out.println("Printing oSort array: ");
+         if (myArray.length < 10) for (int i = 0; i<mySortedArray.length;i++) System.out.print(mySortedArray[i] + " ");
          elapsedTime = myMg.iSortTimed(myArray);
          System.out.println("\n" + elapsedTime);
+         break;
+         case "quick":
+         QuickSort<Integer> myQuick = new QuickSort<Integer>();
+         Comparator<Integer> myQuickComp = new IntegerComparator(ascend);
+         myQuick.setComparator(myQuickComp);
+         if (myArray.length < 10) for (int i=0;i<myArray.length;i++) System.out.print(myArray[i] + " ");
+         System.out.println();
+         myQuick.iSort(myArray);
+         mySortedArray = myQuick.oSort(myArray);
+         if (myArray.length < 10) for (int i = 0; i<mySortedArray.length;i++) System.out.print(mySortedArray[i] + " ");
+         //elapsedTime = myQuick.iSortTimed(myArray);
+         //System.out.println("\n" + elapsedTime);
       }
 
       /*
