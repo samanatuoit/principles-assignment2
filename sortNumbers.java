@@ -250,7 +250,10 @@ class QuickSort<T> extends ArraySort<T> {
       return arrayCopy;
    }
    public long iSortTimed(T[] inArray) {
-      return 0; // Placeholder
+      long startTime = System.nanoTime();
+      qsort(inArray, 0, inArray.length-1);
+      long elapsedTime = System.nanoTime() - startTime;
+      return elapsedTime;
    }
    public void setComparator(Comparator<T> comparator) {
       myComp = comparator;
@@ -312,8 +315,8 @@ public class sortNumbers {
          myQuick.iSort(myArray);
          mySortedArray = myQuick.oSort(myArray);
          if (myArray.length < 10) for (int i = 0; i<mySortedArray.length;i++) System.out.print(mySortedArray[i] + " ");
-         //elapsedTime = myQuick.iSortTimed(myArray);
-         //System.out.println("\n" + elapsedTime);
+         elapsedTime = myQuick.iSortTimed(myArray);
+         System.out.println("\n" + elapsedTime);
       }
 
       /*
